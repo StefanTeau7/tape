@@ -50,7 +50,7 @@ const json = (status, body, extra = {}) => new Response(JSON.stringify(body), {
 // own look. Title and message are always fixed strings from this file, never
 // request data.
 const page = (status, title, message) => new Response(`<!doctype html>
-<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="robots" content="noindex"><meta name="theme-color" content="#EEEBE4"><title>${title} · Tape</title><link rel="icon" type="image/svg+xml" href="/assets/rolf.svg"><link rel="stylesheet" href="/site.d585c4bcdbec.css"></head>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="robots" content="noindex"><meta name="theme-color" content="#EEEBE4"><title>${title} · Tape</title><link rel="icon" type="image/svg+xml" href="/assets/rolf.svg"><link rel="stylesheet" href="/site.9a987c2fbb0e.css"></head>
 <body><div class="page">
 <header class="top"><a class="logo" href="/" aria-label="Tape home"><span class="lift logo-tilt" aria-hidden="true"><span class="mt logo-strip">Tape</span></span></a></header>
 <main class="doc doc-answer"><h1>${title}</h1><p>${message}</p><p><a href="/">Back to Tape</a></p></main>

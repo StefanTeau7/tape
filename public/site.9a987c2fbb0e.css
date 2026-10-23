@@ -130,14 +130,14 @@ html:not(.js) .rolf-say { display: none; }
 .top-link { display: inline-flex; align-items: center; min-height: 44px; padding: 0 8px; margin: 0 -8px; font-size: 16px; font-weight: 600; text-decoration: none; }
 
 /* Hero */
-.hero { max-width: var(--max); margin: 0 auto; padding: clamp(20px, 3.5vw, 44px) var(--gutter) clamp(64px, 8vw, 104px); }
-.hero-title { font-family: var(--display); font-weight: 800; font-size: clamp(48px, 10.4vw, 168px); line-height: .92; letter-spacing: -0.065em; text-wrap: initial; }
+.hero { max-width: var(--max); margin: 0 auto; padding: clamp(12px, 2.4vw, 32px) var(--gutter) clamp(56px, 7vw, 96px); display: grid; grid-template-columns: minmax(0, 1fr); gap: clamp(36px, 5vw, 56px); }
+.hero-text { display: flex; flex-direction: column; align-items: flex-start; gap: clamp(18px, 2.2vw, 26px); min-width: 0; }
+.hero-title { font-family: var(--display); font-weight: 800; font-size: clamp(44px, 7.4vw, 76px); line-height: .94; letter-spacing: -0.058em; text-wrap: initial; }
 .hero-tilt { display: inline-block; margin: .12em 0 0 -.12em; transform: rotate(-1.6deg); }
 .hero-strip { display: inline-block; padding: .07em .3em .17em .24em; line-height: 1; }
 .hero-strip .crease { left: 63%; }
-.hero-row { display: flex; flex-wrap: wrap; gap: 24px clamp(28px, 5vw, 72px); align-items: flex-end; justify-content: space-between; margin-top: clamp(28px, 3.6vw, 48px); }
-.lede { flex: 1 1 340px; max-width: 26ch; font-size: clamp(20px, 1.9vw, 26px); line-height: 1.4; color: var(--ink-2); }
-.hero-join { flex: 1 1 420px; min-width: 0; max-width: 560px; display: flex; flex-direction: column; gap: 12px; }
+.lede { font-size: clamp(18px, 1.7vw, 22px); line-height: 1.4; color: var(--ink-2); }
+.hero-join { width: 100%; min-width: 0; max-width: 520px; display: flex; flex-direction: column; gap: 12px; }
 
 /* Waitlist forms */
 .frm-row { display: flex; flex-wrap: wrap; gap: 12px; }
@@ -159,8 +159,9 @@ html:not(.js) .rolf-say { display: none; }
 .joined-tape { display: inline-block; flex: 0 0 auto; width: 30px; height: 14px; transform: rotate(-6deg); }
 
 /* The wall: one document taped up in four places */
-.wall-wrap { margin-top: clamp(40px, 5vw, 64px); }
-.wall { position: relative; width: 100%; aspect-ratio: 1192 / 660; border-radius: 28px; background: var(--wall); }
+.wall-wrap { min-width: 0; }
+.wall { position: relative; width: 100%; aspect-ratio: 1192 / 660; border-radius: 28px; background: var(--wall); container-type: inline-size; }
+.c-ed, .c-ag, .c-tm, .c-ph { container-type: inline-size; }
 .tilt { position: relative; }
 .c-ed { position: absolute; left: 5%; top: 11%; width: 40%; z-index: 3; }
 .c-ag { position: absolute; left: 49%; top: 6%; width: 28%; z-index: 1; }
@@ -180,15 +181,19 @@ html:not(.js) .rolf-say { display: none; }
 .done { display: contents; }
 .label { position: absolute; z-index: 3; }
 .marker-label { display: inline-block; padding: 4px 13px 3px; font-family: var(--marker); font-size: clamp(11px, 1vw, 16px); color: var(--ink); white-space: nowrap; }
+.label-ed .marker-label { font-size: clamp(11px, 3cqi, 16px); }
+.label-ag .marker-label { font-size: clamp(11px, 4.3cqi, 16px); }
+.label-tm .marker-label { font-size: clamp(11px, 4.6cqi, 16px); }
+.label-ph .marker-label { font-size: clamp(11px, 9.3cqi, 16px); }
 .label-ag { left: 6%; bottom: -15px; transform: rotate(-4deg); }
 .label-ed { right: 8%; bottom: -17px; transform: rotate(3deg); }
 .label-tm { left: 6%; bottom: -15px; transform: rotate(-3deg); }
 .label-ph { left: 4%; bottom: -15px; transform: rotate(-5deg); }
 
-.card-term { aspect-ratio: 16 / 11; overflow: hidden; display: flex; flex-direction: column; gap: 4px; padding: 7%; background: var(--term); color: var(--term-ink); border-radius: 10px; box-shadow: 0 20px 40px rgba(26,24,20,.24); font-family: var(--mono); font-size: clamp(8px, .82vw, 12px); line-height: 1.6; }
+.card-term { aspect-ratio: 16 / 11; overflow: hidden; display: flex; flex-direction: column; gap: 4px; padding: 7%; background: var(--term); color: var(--term-ink); border-radius: 10px; box-shadow: 0 20px 40px rgba(26,24,20,.24); font-family: var(--mono); font-size: clamp(8px, 3.5cqi, 13px); line-height: 1.6; }
 .term-head, .term-p { color: var(--term-dim); }
 
-.card-ed { aspect-ratio: 4 / 3.1; overflow: hidden; display: flex; flex-direction: column; background: var(--sheet); border-radius: 8px; box-shadow: 0 24px 54px rgba(26,24,20,.16), 0 2px 6px rgba(26,24,20,.08); font-family: var(--mono); font-size: clamp(8.5px, .95vw, 14px); line-height: 1.75; color: var(--ink); }
+.card-ed { aspect-ratio: 4 / 3.1; overflow: hidden; display: flex; flex-direction: column; background: var(--sheet); border-radius: 8px; box-shadow: 0 24px 54px rgba(26,24,20,.16), 0 2px 6px rgba(26,24,20,.08); font-family: var(--mono); font-size: clamp(8.5px, 2.85cqi, 14px); line-height: 1.75; color: var(--ink); }
 .ed-head { display: flex; align-items: center; justify-content: space-between; gap: 8px; padding: 3% 4.5% 2%; }
 .ed-file { font-weight: 600; }
 .chip { display: inline-flex; align-items: center; gap: 6px; padding: 3px 9px; border-radius: 999px; background: var(--ink); color: var(--sheet); font-family: var(--body); font-weight: 600; font-size: .88em; white-space: nowrap; }
@@ -201,7 +206,7 @@ html:not(.js) .rolf-say { display: none; }
 .ed-txt { min-width: 0; }
 .ed-live { background: var(--tape-hl); }
 
-.card-tm { aspect-ratio: 4 / 3.3; overflow: hidden; display: flex; flex-direction: column; gap: 6px; padding: 8%; background: var(--sheet); border-radius: 8px; box-shadow: 0 18px 40px rgba(26,24,20,.14); font-size: clamp(8px, .85vw, 12.5px); line-height: 1.55; color: var(--ink); }
+.card-tm { aspect-ratio: 4 / 3.3; overflow: hidden; display: flex; flex-direction: column; gap: 6px; padding: 8%; background: var(--sheet); border-radius: 8px; box-shadow: 0 18px 40px rgba(26,24,20,.14); font-size: clamp(8px, 3.95cqi, 13px); line-height: 1.55; color: var(--ink); }
 .tm-head { display: flex; align-items: center; justify-content: space-between; gap: 8px; }
 .tm-title { font-family: var(--display); font-weight: 800; font-size: 1.5em; letter-spacing: -0.03em; }
 .avatars { display: inline-flex; gap: 3px; }
@@ -209,23 +214,46 @@ html:not(.js) .rolf-say { display: none; }
 .av-ai { background: var(--ink); color: var(--sheet); }
 .av-you { background: var(--tape); color: var(--ink); }
 
-.card-ph { aspect-ratio: 9 / 17; overflow: hidden; display: flex; flex-direction: column; gap: 5px; padding: 26% 10% 10%; background: var(--sheet); border: 5px solid var(--ink); border-radius: 22px; box-shadow: 0 20px 40px rgba(26,24,20,.2); font-size: clamp(7px, .7vw, 10.5px); line-height: 1.5; color: var(--ink); }
+.card-ph { aspect-ratio: 9 / 17; overflow: hidden; display: flex; flex-direction: column; gap: 5px; padding: 26% 10% 10%; background: var(--sheet); border: 5px solid var(--ink); border-radius: 22px; box-shadow: 0 20px 40px rgba(26,24,20,.2); font-size: clamp(7px, 6.5cqi, 11px); line-height: 1.5; color: var(--ink); }
 .ph-title { font-family: var(--display); font-weight: 800; font-size: 1.35em; }
 
 .rolfbtn { display: block; width: 100%; padding: 0; border: 0; background: transparent; cursor: pointer; border-radius: 50%; }
 .rolf-svg { width: 100%; height: auto; overflow: visible; }
-.rolf-say { position: absolute; right: 92%; top: -4%; padding: 7px 12px 6px; border: 2px solid var(--ink); border-radius: 14px 14px 2px 14px; background: var(--sheet); font-family: var(--marker); font-size: clamp(11px, 1.05vw, 16px); line-height: 1.2; color: var(--ink); white-space: nowrap; }
+.rolf-say { position: absolute; right: 92%; top: -4%; padding: 7px 12px 6px; border: 2px solid var(--ink); border-radius: 14px 14px 2px 14px; background: var(--sheet); font-family: var(--marker); font-size: clamp(11px, 1.27cqi, 16px); line-height: 1.2; color: var(--ink); white-space: nowrap; }
 
 .anno { position: absolute; z-index: 5; font-family: var(--marker); color: var(--ink); }
-.a1 { left: 6%; top: 79%; transform: rotate(-4deg); font-size: clamp(18px, 1.7vw, 26px); line-height: 1.1; }
+.a1 { left: 6%; top: 79%; transform: rotate(-4deg); font-size: clamp(16px, 2.05cqi, 26px); line-height: 1.1; }
 .a1x { left: 21%; top: 66%; width: 19%; height: auto; }
-.a2 { left: 79%; top: 7%; transform: rotate(4deg); font-size: clamp(16px, 1.5vw, 23px); line-height: 1.1; }
+.a2 { left: 79%; top: 7%; transform: rotate(4deg); font-size: clamp(15px, 1.81cqi, 23px); line-height: 1.1; }
 .a2x { left: 73.5%; top: 15%; width: 6%; height: auto; }
-.a3 { left: 54.5%; top: 90.5%; transform: rotate(-2deg); font-size: clamp(15px, 1.4vw, 21px); line-height: 1.2; }
+.a3 { left: 54.5%; top: 90.5%; transform: rotate(-2deg); font-size: clamp(14px, 1.69cqi, 21px); line-height: 1.2; }
+
+@media (min-width: 721px) and (max-width: 1023px) {
+  .hero-join { max-width: 560px; }
+}
+
+/* Wide screens: the title and sign-up on the left, the live wall beside them */
+@media (min-width: 1024px) {
+  .hero { grid-template-columns: minmax(0, 1fr) minmax(0, 1.12fr); align-items: center; column-gap: clamp(40px, 4.5vw, 72px); padding-top: clamp(12px, 1.8vw, 28px); }
+  .hero-title { font-size: clamp(52px, 4.7vw, 72px); }
+  .wall { aspect-ratio: 6 / 5; border-radius: 26px; }
+  .c-ed { left: 3%; top: 8%; width: 54%; }
+  .c-ag { left: 59%; top: 15%; width: 38%; }
+  .c-tm { left: 55%; right: auto; top: 53%; width: 41%; }
+  .c-ph { left: 37%; top: 44%; width: 16%; }
+  .c-rolf { left: 5%; right: auto; top: 66%; width: 14%; }
+  .label-ed { right: auto; left: 7%; }
+  .rolf-say { right: auto; left: 94%; top: -6%; border-radius: 14px 14px 14px 2px; font-size: clamp(11px, 2.2cqi, 15px); }
+  .a1 { left: 4%; top: 84%; font-size: clamp(14px, 3cqi, 21px); }
+  .a1x { left: 22%; top: 75%; width: 14%; }
+  .a2 { left: 74%; top: 3%; font-size: clamp(13px, 2.6cqi, 18px); }
+  .a2x { left: 66%; top: 6%; width: 8%; }
+  .a3 { left: 37%; top: 87%; font-size: clamp(13px, 2.5cqi, 18px); }
+}
 
 /* Sections */
 .sec { max-width: var(--max); margin: 0 auto; padding: clamp(24px, 4vw, 48px) var(--gutter) clamp(56px, 7vw, 96px); }
-.h2 { font-family: var(--display); font-weight: 800; font-size: clamp(42px, 5.6vw, 84px); line-height: .95; letter-spacing: -0.055em; }
+.h2 { font-family: var(--display); font-weight: 800; font-size: clamp(36px, 4.2vw, 60px); line-height: .95; letter-spacing: -0.055em; }
 #how-title { margin-bottom: clamp(44px, 5vw, 64px); }
 
 /* How it feels */
@@ -271,13 +299,13 @@ html:not(.js) .rolf-say { display: none; }
 .sec-rip { padding-top: clamp(72px, 9vw, 128px); padding-bottom: clamp(72px, 9vw, 128px); }
 #rip-title { margin-bottom: clamp(36px, 4vw, 56px); }
 .rip { list-style: none; padding: 0; display: flex; flex-direction: column; gap: 10px; }
-.rip li { position: relative; align-self: flex-start; max-width: 100%; font-family: var(--mono); font-weight: 500; font-size: clamp(20px, 3vw, 44px); line-height: 1.25; letter-spacing: -0.04em; color: var(--muted); overflow-wrap: anywhere; }
+.rip li { position: relative; align-self: flex-start; max-width: 100%; font-family: var(--mono); font-weight: 500; font-size: clamp(18px, 2.4vw, 34px); line-height: 1.25; letter-spacing: -0.04em; color: var(--muted); overflow-wrap: anywhere; }
 .rip-name { text-decoration: none; }
 .strike { position: absolute; left: -.2em; right: -.2em; top: 50%; height: .42em; margin-top: -.21em; }
 .s1 { transform: rotate(-1deg); } .s2 { transform: rotate(.8deg); } .s3 { transform: rotate(-1.4deg); } .s4 { transform: rotate(.6deg); } .s5 { transform: rotate(-.9deg); }
 .rip-one { display: flex; flex-wrap: wrap; align-items: center; gap: 14px 28px; margin-top: 36px; padding-top: 30px; border-top: 1.5px dashed var(--rule); }
 .rip-tilt { display: inline-block; transform: rotate(-2deg); }
-.rip-label { display: inline-block; padding: 6px 22px 8px 18px; font-family: var(--mono); font-weight: 600; font-size: clamp(24px, 3.4vw, 50px); letter-spacing: -0.04em; line-height: 1.1; color: var(--ink); }
+.rip-label { display: inline-block; padding: 6px 22px 8px 18px; font-family: var(--mono); font-weight: 600; font-size: clamp(22px, 2.7vw, 38px); letter-spacing: -0.04em; line-height: 1.1; color: var(--ink); }
 .rip-line { font-size: clamp(18px, 1.6vw, 22px); line-height: 1.45; color: var(--ink-2); }
 
 /* Go on, tape something. */
@@ -358,7 +386,7 @@ html:not(.js) .rolf-say { display: none; }
 .is-joined .face-happy { display: inline; }
 .join-say { position: absolute; right: 88%; top: 6%; padding: 6px 12px 5px; border: 2px solid var(--ink); border-radius: 14px 14px 2px 14px; background: var(--sheet); font-family: var(--marker); font-size: clamp(12px, 1.1vw, 16px); color: var(--ink); white-space: nowrap; transform: rotate(-8deg); }
 .join-card { display: flex; flex-direction: column; align-items: center; gap: 20px; padding: clamp(48px, 7vw, 88px) clamp(22px, 5vw, 72px); background: var(--sheet); border-radius: 10px; text-align: center; box-shadow: 0 30px 64px rgba(26,24,20,.14); }
-.join-title { font-family: var(--display); font-weight: 800; font-size: clamp(44px, 6.4vw, 100px); line-height: .95; letter-spacing: -0.06em; }
+.join-title { font-family: var(--display); font-weight: 800; font-size: clamp(40px, 5vw, 72px); line-height: .95; letter-spacing: -0.06em; }
 .join-strip-tilt { display: inline-block; transform: rotate(-1.5deg); }
 .join-strip { display: inline-block; padding: .04em .22em .12em .16em; line-height: 1; }
 .first-up { display: inline-flex; align-items: center; gap: 8px; padding: 6px 14px; border-radius: 999px; border: 2px solid var(--ink); background: var(--tape); color: var(--ink); font-size: 15px; font-weight: 700; }
@@ -422,8 +450,8 @@ html:not(.js) .rolf-say { display: none; }
 }
 @media (max-width: 380px) {
   .hero-title { font-size: 44px; }
-  .h2 { font-size: 38px; }
-  .join-title { font-size: 40px; }
+  .h2 { font-size: 34px; }
+  .join-title { font-size: 36px; }
   .vb { padding: 0 16px; }
   .quest-list { grid-template-columns: minmax(0, 1fr); }
 }
