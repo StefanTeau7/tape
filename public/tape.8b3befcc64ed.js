@@ -1,5 +1,5 @@
-// The Tape home page: the typing wall, Rolf, the try-it doc, "What would you
-// tape first?" and the waitlist forms. Without JavaScript the page is complete:
+// The Tape home page: the typing wall, Rolf, "What would you tape first?"
+// and the waitlist forms. Without JavaScript the page is complete:
 // the wall shows its last frame, the pick is a plain radio group sent with the
 // closing form, and both forms post to /api/waitlist, which answers with a page.
 (() => {
@@ -105,102 +105,6 @@
       say = say + 1 >= SAYINGS.length ? 1 : say + 1;
       rolfSay.textContent = SAYINGS[say];
     });
-  }
-
-  // ---- Achievement toast
-  const toast = $('[data-toast]');
-  let toastTimer = 0;
-  const showToast = (title, text) => {
-    if (!toast) return;
-    $('[data-toast-title]', toast).textContent = title;
-    $('[data-toast-text]', toast).textContent = text;
-    toast.hidden = true;
-    void toast.offsetWidth; // restart the entrance animation
-    toast.hidden = false;
-    clearTimeout(toastTimer);
-    toastTimer = setTimeout(() => { toast.hidden = true; }, 2900);
-  };
-
-  // ---- Go on, tape something: mask, peel, strip and seal one line of a doc.
-  const VERSIONS = [
-    'Write the launch post. Keep it short and honest.',
-    'Launch post: one demo video, one paragraph, zero buzzwords.',
-    'Launch post: a 30-second demo, then a list of what it can’t do yet.',
-  ];
-  const QUESTS = {
-    mask: ['Undercover', 'You masked your first line.'],
-    peel: ['Clean peel', 'You applied an agent’s draft.'],
-    strip: ['No trace', 'You threw a draft away.'],
-    seal: ['Locked in', 'You sealed a version.'],
-  };
-  const play = $('#try');
-  if (play && $('[data-verb]', play)) {
-    const s = { mode: 'open', ci: 0, ti: 1, rn: 0, last: '', status: 'Pick a verb. Start with Mask it.', done: new Set() };
-    const q = (name) => $(`[data-${name}]`, play);
-    const verb = (name) => $(`[data-verb="${name}"]`, play);
-    let typer = 0;
-    const render = () => {
-      const target = VERSIONS[s.ti];
-      const typedAll = s.rn >= target.length;
-      const masked = s.mode === 'masked', sealed = s.mode === 'sealed';
-      verb('mask').disabled = s.mode !== 'open';
-      verb('peel').disabled = !(masked && typedAll);
-      verb('strip').disabled = !masked;
-      verb('seal').disabled = s.mode !== 'open';
-      verb('seal').hidden = sealed;
-      verb('unseal').hidden = !sealed;
-      q('hint').hidden = !!s.last;
-      q('seal-tape').hidden = !sealed;
-      q('file').hidden = sealed;
-      q('stamp').hidden = !sealed;
-      q('p2').textContent = VERSIONS[s.ci];
-      q('masked-label').hidden = !masked;
-      q('mask-over').hidden = !masked;
-      q('edited').hidden = !(s.ci > 0 && !masked);
-      q('draft-box').hidden = !masked;
-      q('draft').textContent = target.slice(0, s.rn);
-      for (const row of $$('[data-row]', play)) row.classList.toggle('is-last', row.dataset.row === s.last);
-      q('status').textContent = s.status;
-      for (const item of $$('[data-quest]', play)) item.classList.toggle('is-done', s.done.has(item.dataset.quest));
-      q('quest-count').textContent = `${s.done.size} / 4 done`;
-      q('all-done').hidden = s.done.size < 4;
-    };
-    const unlock = (key) => {
-      if (s.done.has(key)) return;
-      s.done.add(key);
-      if (s.done.size === 4) showToast('Tape master', 'All four quests done. Rolf is impressed.');
-      else showToast(...QUESTS[key]);
-    };
-    const typeDraft = () => {
-      clearInterval(typer);
-      const target = VERSIONS[s.ti];
-      if (reduce) { s.rn = target.length; render(); return; }
-      typer = setInterval(() => {
-        if (s.mode !== 'masked' || s.rn >= target.length) { clearInterval(typer); return; }
-        s.rn += 1;
-        render();
-      }, 55);
-    };
-    const actions = {
-      mask() { Object.assign(s, { mode: 'masked', ti: s.ci === 1 ? 2 : 1, rn: 0, last: 'mask', status: 'Masked. The agent rewrites this line in private.' }); unlock('mask'); typeDraft(); },
-      peel() { Object.assign(s, { mode: 'open', ci: s.ti, rn: 0, last: 'peel', status: 'Peeled. The agent’s version is in.' }); unlock('peel'); },
-      strip() { Object.assign(s, { mode: 'open', rn: 0, last: 'strip', status: 'Stripped. The draft is gone; nothing changed.' }); unlock('strip'); },
-      seal() { Object.assign(s, { mode: 'sealed', last: 'seal', status: 'Sealed. Locked for good.' }); unlock('seal'); },
-      unseal() { Object.assign(s, { mode: 'open', last: 'seal', status: 'Unsealed. The sealed version stays on record.' }); },
-    };
-    for (const button of $$('[data-verb]', play)) {
-      button.addEventListener('click', () => {
-        const name = button.dataset.verb;
-        actions[name]();
-        render();
-        // Keep keyboard focus on the toolbar when the pressed button disappears.
-        if (button.hidden || button.disabled) {
-          const next = name === 'seal' ? verb('unseal') : name === 'unseal' ? verb('seal') : $('[data-verb]:not([disabled]):not([hidden])', play);
-          if (next) next.focus();
-        }
-      });
-    }
-    render();
   }
 
   // ---- What would you tape first?

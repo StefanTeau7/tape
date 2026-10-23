@@ -70,7 +70,6 @@ html:not(.js) .rolf-say { display: none; }
 .caret { display: inline-block; flex: 0 0 auto; width: 2px; height: 1.05em; margin-left: 2px; vertical-align: -.16em; border-radius: 1px; animation: blink 1s steps(1) infinite; }
 .caret-dark { background: var(--ink); }
 .caret-light { background: var(--term-ink); }
-.marker { font-family: var(--marker); }
 
 /* Motion */
 .stick { transform-origin: left center; animation: stick .75s cubic-bezier(.2,.9,.3,1.25) both; }
@@ -85,8 +84,6 @@ html:not(.js) .rolf-say { display: none; }
 .eye { transform-box: fill-box; transform-origin: center; animation: eyes 4.5s ease-in-out infinite; }
 .btn { transition: transform .15s ease, filter .15s ease; }
 .btn:hover { transform: translateY(-2px); filter: brightness(1.15); }
-.vb { transition: transform .15s ease; }
-.vb:hover:not(:disabled) { transform: translateY(-2px); }
 .hov { transition: transform .3s cubic-bezier(.2,.8,.2,1), box-shadow .3s ease, background-color .2s ease; }
 .hov:hover { transform: translateY(-6px); box-shadow: 0 28px 52px rgba(26,24,20,.16); }
 .rolfbtn { transition: transform .2s ease; }
@@ -102,7 +99,6 @@ html:not(.js) .rolf-say { display: none; }
 @keyframes fade { from { opacity: 0; } to { opacity: 1; } }
 @keyframes bob { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-5px); } }
 @keyframes eyes { 0%, 90%, 100% { transform: scaleY(1); } 94% { transform: scaleY(.12); } }
-@keyframes toast { from { opacity: 0; transform: translateY(24px) scale(.92); } to { opacity: 1; transform: none; } }
 /* Sections slide up a little as they scroll in. Only position moves, never
    opacity, so everything stays readable however the page is viewed. */
 @keyframes rv { from { transform: translateY(34px); } to { transform: none; } }
@@ -128,7 +124,6 @@ html:not(.js) .rolf-say { display: none; }
 .logo-tilt { display: inline-block; transform: rotate(-3deg); }
 .logo-strip { display: inline-block; padding: 3px 15px 6px 13px; font-family: var(--display); font-weight: 800; font-size: 28px; letter-spacing: -0.05em; line-height: 1; color: var(--ink); }
 .top-nav { display: flex; align-items: center; gap: clamp(16px, 2.4vw, 32px); flex-wrap: wrap; }
-.top-link { display: inline-flex; align-items: center; min-height: 44px; padding: 0 8px; margin: 0 -8px; font-size: 16px; font-weight: 600; text-decoration: none; }
 
 /* Hero */
 .hero { max-width: var(--max); margin: 0 auto; padding: clamp(12px, 2.4vw, 32px) var(--gutter) clamp(56px, 7vw, 96px); display: grid; grid-template-columns: minmax(0, 1fr); gap: clamp(36px, 5vw, 56px); }
@@ -330,63 +325,9 @@ html:not(.js) .rolf-say { display: none; }
 .rip-label { display: inline-block; padding: 6px 22px 8px 18px; font-family: var(--mono); font-weight: 600; font-size: clamp(22px, 2.7vw, 38px); letter-spacing: -0.04em; line-height: 1.1; color: var(--ink); }
 .rip-line { font-size: clamp(18px, 1.6vw, 22px); line-height: 1.45; color: var(--ink-2); }
 
-/* Go on, tape something. */
-.try { background: var(--wall); }
-.try-in { max-width: var(--max); margin: 0 auto; padding: clamp(80px, 10vw, 136px) var(--gutter); }
-.try-head { display: flex; flex-wrap: wrap; align-items: flex-end; justify-content: space-between; gap: 20px 48px; margin-bottom: clamp(40px, 5vw, 60px); }
-.try-verbs { font-family: var(--display); font-weight: 700; font-size: clamp(22px, 2.2vw, 30px); letter-spacing: -0.03em; color: var(--ink-2); }
-.try-body { display: flex; flex-wrap: wrap; gap: clamp(28px, 4vw, 56px); align-items: flex-start; }
-.try-main { flex: 1.4 1 520px; min-width: 0; }
-.verbs { display: flex; flex-wrap: wrap; align-items: center; gap: 10px; margin-bottom: 26px; }
-.vb { display: inline-flex; align-items: center; gap: 10px; min-height: 50px; padding: 0 22px; border-radius: 12px; border: 2px solid var(--ink); background: var(--sheet); color: var(--ink); font: 700 17px var(--body); cursor: pointer; }
-.vb-ink { background: var(--ink); color: var(--sheet); }
-.vb:disabled { opacity: .32; cursor: not-allowed; }
-.sw-tape { display: inline-block; width: 24px; height: 13px; }
-.sw-seal { display: inline-block; width: 24px; height: 13px; border: 1px solid var(--sheet); background: repeating-linear-gradient(-45deg, var(--seal) 0 5px, #FFFFFF 5px 10px); }
-.hint { display: inline-flex; align-items: center; gap: 6px; margin-left: 6px; transform: rotate(-3deg); font-family: var(--marker); font-size: 20px; color: var(--ink); }
-.doc-tilt { position: relative; transform: rotate(-.6deg); }
-.doc-tape { position: absolute; top: -13px; width: 116px; height: 28px; z-index: 4; }
-.doc-tape-l { left: -18px; transform: rotate(-12deg); }
-.doc-tape-r { right: -18px; transform: rotate(10deg); }
-.pdoc { position: relative; overflow: hidden; display: flex; flex-direction: column; gap: 18px; padding: clamp(28px, 3.6vw, 48px); background: var(--sheet); border-radius: 8px; box-shadow: 0 26px 52px rgba(26,24,20,.13); font-size: clamp(17px, 1.45vw, 20px); line-height: 1.55; }
-.seal-tape { position: absolute; right: -72px; top: 34px; width: 280px; height: 30px; z-index: 3; transform: rotate(32deg); }
-.seal-strip { display: block; width: 100%; height: 100%; background: repeating-linear-gradient(-45deg, var(--seal) 0 16px, #FFFFFF 16px 32px); box-shadow: 0 6px 14px rgba(26,24,20,.2); }
-.pdoc-head { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 12px; }
-.pdoc-title { font-family: var(--display); font-weight: 800; font-size: clamp(28px, 2.7vw, 38px); letter-spacing: -0.04em; }
-.pdoc-file { font-family: var(--mono); font-size: 13px; color: var(--muted); }
-.stamp { display: inline-flex; align-items: center; gap: 8px; margin-right: 56px; padding: 6px 12px; border: 2.5px solid var(--seal); border-radius: 6px; transform: rotate(-5deg); color: var(--seal); font-family: var(--mono); font-weight: 600; font-size: 14px; letter-spacing: .08em; text-transform: uppercase; }
-.pdoc-group { display: flex; flex-direction: column; gap: 8px; }
-.masked-label { align-self: flex-start; display: inline-block; transform: rotate(-1.5deg); }
-.masked-label .mt { padding: 3px 14px 2px; font-family: var(--marker); font-size: 15px; color: var(--ink); }
-.p2-wrap { position: relative; }
-.mask-over { position: absolute; left: -1.5%; right: -1.5%; top: -4px; bottom: -4px; opacity: .55; }
-.edited { align-self: flex-start; display: inline-flex; align-items: center; gap: 6px; padding: 3px 10px; border-radius: 999px; background: #EFEBE2; color: var(--ink-2); font-family: var(--mono); font-size: 12px; }
-.draft-box { padding: 14px 16px; border: 2px dashed #8A6D2B; border-radius: 10px; background: #FBF6E8; }
-.draft-kicker { margin-bottom: 6px; font-family: var(--mono); font-size: 12px; letter-spacing: .06em; text-transform: uppercase; color: #5C4A1E; }
-.try-side { flex: 1 1 300px; min-width: 0; position: relative; transform: rotate(.8deg); }
-.side-tape { position: absolute; left: 50%; top: -12px; width: 96px; height: 24px; margin-left: -48px; z-index: 2; transform: rotate(-3deg); }
-.side-card { padding: 30px 24px 22px; background: var(--sheet); border-radius: 8px; box-shadow: 0 16px 36px rgba(26,24,20,.1); }
-.vrow { display: grid; grid-template-columns: 92px minmax(0, 1fr); gap: 12px; align-items: center; padding: 12px 10px; border-radius: 8px; transition: background-color .2s ease; }
-.vrow.is-last { background: var(--tape-hl); }
-.vrow dt { display: flex; align-items: center; gap: 8px; font-family: var(--marker); font-size: 22px; color: var(--ink); }
-.vrow dd { font-size: 16.5px; line-height: 1.4; color: var(--ink-2); }
-.sw-sm { display: inline-block; flex: 0 0 auto; width: 18px; height: 10px; }
-.sw-seal-sm { background: repeating-linear-gradient(-45deg, var(--seal) 0 4px, #FFFFFF 4px 8px); border: 1px solid var(--seal); }
-.pstatus { margin-top: 16px; padding: 14px 16px; border-radius: 10px; background: #F3EFE6; font-size: 16px; line-height: 1.5; }
-.quests { margin-top: 18px; padding-top: 16px; border-top: 1.5px dashed var(--rule); }
-.quests-head { display: flex; align-items: baseline; justify-content: space-between; gap: 12px; margin-bottom: 10px; }
-.quests-title { font-family: var(--marker); font-size: 22px; color: var(--ink); }
-.quests-count { font-family: var(--mono); font-size: 13px; color: var(--ink-3); }
-.quest-list { list-style: none; padding: 0; display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 8px; }
-.quest { display: flex; flex-direction: column; gap: 2px; padding: 10px 12px; border-radius: 10px; border: 2px dashed var(--ink); color: #5C584F; transition: background-color .2s ease; }
-.quest.is-done { border-style: solid; background: var(--tape); color: var(--ink); }
-.quest-name { font-weight: 700; font-size: 15px; }
-.quest-desc { font-size: 13px; line-height: 1.35; }
-.all-done { margin-top: 14px; font-size: 16px; line-height: 1.5; }
-.all-done a { font-weight: 700; }
-
 /* What would you tape first? */
 .sec-first { padding-top: clamp(72px, 9vw, 120px); padding-bottom: 0; }
+.sec-rip + .sec-first { padding-top: clamp(24px, 4vw, 48px); }
 #first-title { margin-bottom: clamp(36px, 4vw, 52px); }
 .picks { display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 20px; }
 .pick { position: relative; display: flex; flex-direction: column; align-items: flex-start; gap: 18px; min-height: 184px; padding: 26px 24px 24px; border-radius: 12px; border: 2px solid var(--ink); background: var(--sheet); color: var(--ink); cursor: pointer; }
@@ -427,14 +368,6 @@ html:not(.js) .rolf-say { display: none; }
 .foot-plain { border-top: 1.5px dashed var(--rule); }
 .foot-links { display: inline-flex; gap: 18px; }
 
-/* Achievement toast */
-.toast { position: fixed; left: 16px; right: 16px; bottom: max(28px, env(safe-area-inset-bottom, 0px)); z-index: 60; max-width: 340px; margin: 0 auto; display: flex; align-items: center; gap: 12px; padding: 14px 18px; border: 2.5px solid var(--ink); border-radius: 14px; background: var(--sheet); box-shadow: 0 18px 40px rgba(26,24,20,.22); animation: toast .45s cubic-bezier(.2,.9,.3,1.3) both; }
-.toast-badge { flex: 0 0 auto; display: inline-flex; align-items: center; justify-content: center; width: 42px; height: 42px; border-radius: 50%; border: 2px solid var(--ink); background: var(--tape); }
-.toast-body { display: flex; flex-direction: column; gap: 2px; min-width: 0; }
-.toast-kicker { font-family: var(--mono); font-size: 11px; letter-spacing: .1em; text-transform: uppercase; color: #5C584F; }
-.toast-title { font-weight: 700; font-size: 16px; }
-.toast-text { font-size: 14px; line-height: 1.4; color: var(--ink-2); }
-
 /* The privacy page and the form's no-JavaScript answer */
 .top-doc .btn-top { font-size: 15px; }
 .doc { max-width: calc(42em + 2 * var(--gutter)); margin: 0 auto; padding: 24px var(--gutter) 88px; font-size: 17px; line-height: 1.6; color: var(--ink-2); }
@@ -456,9 +389,6 @@ html:not(.js) .rolf-say { display: none; }
   .pick { min-height: 0; gap: 12px; padding: 20px; }
   .how { gap: 44px; }
   .how-card { padding: 40px 24px 26px; }
-  .try-main, .try-side { flex-basis: 100%; }
-  .stamp { margin-right: 0; }
-  .vrow { grid-template-columns: 78px minmax(0, 1fr); padding: 10px 8px; }
   .join-tape { left: -8px; width: 104px; }
   .join-rolf { right: -2px; top: -60px; width: 92px; }
   .join-say { font-size: 13px; }
@@ -480,8 +410,6 @@ html:not(.js) .rolf-say { display: none; }
   .hero-title { font-size: 44px; }
   .h2 { font-size: 34px; }
   .join-title { font-size: 36px; }
-  .vb { padding: 0 16px; }
-  .quest-list { grid-template-columns: minmax(0, 1fr); }
 }
 
 @media (prefers-reduced-motion: reduce) {

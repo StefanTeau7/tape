@@ -11,10 +11,10 @@
 # scripts/hash-assets.mjs before a release), so they can be cached for a year:
 # a changed file gets a new name. Each path is matched by exactly one rule
 # below, because Pages joins the values of overlapping rules.
-/site.aca45dd8d08c.css
+/site.6c79836d097d.css
   Cache-Control: public, max-age=31536000, immutable
 
-/tape.e367cddf7c15.js
+/tape.8b3befcc64ed.js
   Cache-Control: public, max-age=31536000, immutable
 
 /fonts/*

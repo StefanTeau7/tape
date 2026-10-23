@@ -4,9 +4,9 @@ The Tape waitlist site: one static page plus one Cloudflare Pages Function.
 
 ```
 public/              static site (the Pages build output directory)
-  index.html         the page: the taped wall, How it feels, RIP copies, the try-it doc, the pick, sign-up
+  index.html         the page: the taped wall, How it feels, RIP copies, the pick, sign-up
   site.*.css         all styles (no inline styles: the CSP forbids them)
-  tape.*.js          all behaviour: the typing wall, Rolf, the try-it doc, the pick, the forms
+  tape.*.js          all behaviour: the typing wall, Rolf, the pick, the forms
   privacy.html       the privacy page
   404.html           the answer for addresses that don’t exist (without it, Pages would serve the home page)
   fonts/             self-hosted fonts and their licences
@@ -58,10 +58,10 @@ Not done yet. In order:
    - `tape-site`: the real waitlist, bound as `WAITLIST_DB` for Production (Pages project → Settings → Bindings).
    - `tape-site-preview`: bound as `WAITLIST_DB` for Preview, so sign-ups on preview addresses never reach the real list.
 4. **Domain.** With tapeit.dev on Cloudflare (buying it through Cloudflare Registrar does this), Pages project → Custom domains → add `tapeit.dev` and `www.tapeit.dev`.
-5. **Sending email (Resend).** In Resend: Domains → Add domain → `tapeit.dev`. Add the DNS records it lists in Cloudflare → tapeit.dev → DNS (a DKIM TXT record at `resend._domainkey`, and an SPF TXT record and a bounce MX record on the `send` subdomain), set to DNS only, then verify. Leave open and click tracking off: the privacy page says the emails carry none. Then API Keys → Create → Sending access, limited to `tapeit.dev`.
+5. **Sending email (Resend).** In Resend: Domains → Add domain → `tapeit.dev`, region North Virginia (us-east-1), return path `send`. Add the DNS records it lists in Cloudflare → tapeit.dev → DNS, all DNS only, then verify. For tapeit.dev (done Oct 23, 2026, sending through Resend Forge) these are a DKIM TXT record at `resend._domainkey` and two CNAMEs, `send` → `send.forge.rmta.net` and `rsend` → `rsend.forge.rmta.net`. Older Resend setups list an SPF TXT and a bounce MX on `send` instead. Leave open and click tracking off: the privacy page says the emails carry none. Then API Keys → Create → Sending access, limited to `tapeit.dev`.
    In the Pages project: Settings → Variables and secrets → Production → add the secret `RESEND_API_KEY` with that key. Optional: `WAITLIST_FROM`, the sender, by default `Tape <hello@tapeit.dev>`. Preview gets no key, so sign-ups on preview addresses never send email. Redeploy once after adding the secret; secrets apply to new deployments.
-   Recommended for deliverability: a DMARC record, TXT `_dmarc` → `v=DMARC1; p=none;`.
-6. **Receiving email.** Cloudflare → tapeit.dev → Email → Email Routing → enable (it adds its own MX and TXT records on the apex; Resend's MX sits on `send`, so they don't clash). Add the custom address `hello@tapeit.dev` → forward to Stefan's inbox, and confirm the destination from the email Cloudflare sends. The welcome email asks a question and says "Just hit reply", and its `reply_to` is `hello@tapeit.dev`, so this has to work before the first sign-up.
+   For deliverability, tapeit.dev also has a DMARC record, TXT `_dmarc` → `v=DMARC1; p=none;`.
+6. **Receiving email.** Cloudflare → tapeit.dev → Email → Email Routing → enable (it adds its own MX and TXT records on the apex; Resend's records sit on `send`, `rsend` and `resend._domainkey`, so they don't clash). Add the custom address `hello@tapeit.dev` → forward to Stefan's inbox, and confirm the destination from the email Cloudflare sends. The welcome email asks a question and says "Just hit reply", and its `reply_to` is `hello@tapeit.dev`, so this has to work before the first sign-up.
 7. **Placeholders.** Fill in the company name and contact in `public/privacy.html` (highlighted on the page). The email's sign-off is `SIGN_OFF` in `functions/api/waitlist.js`.
 
 Every push to `main` then deploys to production. Other branches get preview addresses such as `https://feat-copy.tape-site-crq.pages.dev`.
