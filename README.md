@@ -49,7 +49,7 @@ Not done yet. In order:
    ```
 
 2. **Cloudflare Pages.** Workers & Pages → Create → Pages → Connect to Git → the repository.
-   - Project name: `tape-site` (the function accepts `tape-site.pages.dev` and its preview addresses as origins; another name needs `ALLOWED_ORIGINS` in `functions/api/waitlist.js` changed)
+   - Project name: `tape-site`. Cloudflare gave it the address `tape-site-7wu.pages.dev`; the function accepts that, `tape-site.pages.dev` and their preview addresses as origins (`ALLOWED_ORIGINS` in `functions/api/waitlist.js`).
    - Production branch: `main`
    - Build command: none
    - Build output directory: `public`
@@ -64,7 +64,7 @@ Not done yet. In order:
 6. **Receiving email.** Cloudflare → tapeit.dev → Email → Email Routing → enable (it adds its own MX and TXT records on the apex; Resend's MX sits on `send`, so they don't clash). Add the custom address `hello@tapeit.dev` → forward to Stefan's inbox, and confirm the destination from the email Cloudflare sends. The welcome email asks a question and says "Just hit reply", and its `reply_to` is `hello@tapeit.dev`, so this has to work before the first sign-up.
 7. **Placeholders.** Fill in the company name and contact in `public/privacy.html` (highlighted on the page). The email's sign-off is `SIGN_OFF` in `functions/api/waitlist.js`.
 
-Every push to `main` then deploys to production. Other branches get preview addresses such as `https://feat-copy.tape-site.pages.dev`.
+Every push to `main` then deploys to production. Other branches get preview addresses such as `https://feat-copy.tape-site-7wu.pages.dev`.
 
 After `schema.sql` changes, run the new statements in both databases' consoles. Every statement uses `IF NOT EXISTS`, so running the whole file again is safe.
 

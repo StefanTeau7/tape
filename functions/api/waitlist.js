@@ -24,7 +24,7 @@ const SITE = 'https://tapeit.dev';
 const REPLY_TO = 'hello@tapeit.dev';
 const MAX_BODY = 4096;
 const SOURCES = new Set(['hero', 'closing']);
-const ALLOWED_ORIGINS = [/^https:\/\/(www\.)?tapeit\.dev$/, /^https:\/\/[a-z0-9-]+\.tape-site\.pages\.dev$/, /^https:\/\/tape-site\.pages\.dev$/, /^http:\/\/(localhost|127\.0\.0\.1)(:\d+)?$/];
+const ALLOWED_ORIGINS = [/^https:\/\/(www\.)?tapeit\.dev$/, /^https:\/\/([a-z0-9-]+\.)?tape-site(-[a-z0-9]+)?\.pages\.dev$/, /^http:\/\/(localhost|127\.0\.0\.1)(:\d+)?$/];
 
 // Letters, digits and the punctuation RFC 5322 allows in an unquoted address,
 // plus non-ASCII letters for internationalised addresses. No spaces, quotes,
