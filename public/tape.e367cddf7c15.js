@@ -31,9 +31,9 @@
   // ---- The wall: an agent and a person take turns typing into one document,
   // and all four places show every keystroke.
   const LINES = [
-    { who: 'agent', text: 'Rate limits: 100 requests per minute per key.' },
-    { who: 'you', text: 'Errors return JSON with a code and a message.' },
-    { who: 'agent', text: 'Webhooks retry three times, then alert the owner.' },
+    { who: 'agent', text: 'Rate limit: 100 per minute.' },
+    { who: 'you', text: 'Errors come back as JSON.' },
+    { who: 'agent', text: 'Webhooks retry 3 times.' },
   ];
   const wall = $('[data-wall]');
   if (wall && !reduce) {
@@ -42,6 +42,8 @@
     const typingNum = $('[data-typing-num]', wall);
     const chip = $('[data-chip]', wall);
     const who = $('[data-who]', wall);
+    const avatars = $$('[data-av]', wall);
+    const lives = $$('.live', wall);
     const doneLine = (kind, line, index) => {
       if (kind === 'term') {
         const row = el('div');
@@ -62,11 +64,17 @@
       const agent = LINES[step].who === 'agent';
       chip.classList.toggle('is-you', !agent);
       who.textContent = agent ? 'Agent is writing' : 'You are writing';
+      for (const av of avatars) av.classList.toggle('is-on', av.dataset.av === LINES[step].who);
+      for (const live of lives) live.classList.remove('flash');
     };
     const showTyping = () => { const text = LINES[step].text.slice(0, n); for (const node of typing) node.textContent = text; };
     const tick = () => {
       const line = LINES[step];
-      if (n < line.text.length) n += 1;
+      if (n < line.text.length) {
+        n += 1;
+        // The line is done: it lands in all four places at once.
+        if (n === line.text.length) for (const live of lives) live.classList.add('flash');
+      }
       else if (hold < 34) { hold += 1; return; }
       else { step = (step + 1) % LINES.length; n = 0; hold = 0; showStep(); }
       showTyping();
