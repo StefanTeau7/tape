@@ -62,7 +62,7 @@ Not done yet. In order:
    In the Pages project: Settings → Variables and secrets → Production → add the secret `RESEND_API_KEY` with that key. Optional: `WAITLIST_FROM`, the sender, by default `Tape <hello@tapeit.dev>`. Preview gets no key, so sign-ups on preview addresses never send email. Redeploy once after adding the secret; secrets apply to new deployments.
    Recommended for deliverability: a DMARC record, TXT `_dmarc` → `v=DMARC1; p=none;`.
 6. **Receiving email.** Cloudflare → tapeit.dev → Email → Email Routing → enable (it adds its own MX and TXT records on the apex; Resend's MX sits on `send`, so they don't clash). Add the custom address `hello@tapeit.dev` → forward to Stefan's inbox, and confirm the destination from the email Cloudflare sends. The welcome email asks a question and says "Just hit reply", and its `reply_to` is `hello@tapeit.dev`, so this has to work before the first sign-up.
-7. **Placeholders.** Fill in the company name and contact in `public/privacy.html` (highlighted on the page), and put the co-founder's name in `SIGN_OFF` in `functions/api/waitlist.js`.
+7. **Placeholders.** Fill in the company name and contact in `public/privacy.html` (highlighted on the page). The email's sign-off is `SIGN_OFF` in `functions/api/waitlist.js`.
 
 Every push to `main` then deploys to production. Other branches get preview addresses such as `https://feat-copy.tape-site.pages.dev`.
 

@@ -18,7 +18,7 @@
 export const CONSENT_VERSION = 'waitlist-2026-10-23';
 export const DAILY_LIMIT = 25;
 // Who signs the welcome email. The co-founder's name goes here.
-export const SIGN_OFF = 'Stefan and the Tape team';
+export const SIGN_OFF = 'Stefan from Tape';
 export const PICKS = new Set(['memory', 'plan', 'spec', 'notes']);
 const SITE = 'https://tapeit.dev';
 const REPLY_TO = 'hello@tapeit.dev';
