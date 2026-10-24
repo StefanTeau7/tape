@@ -14,6 +14,13 @@ public/              static site (the Pages build output directory)
   _headers, robots.txt, sitemap.xml
 functions/api/
   waitlist.js        POST /api/waitlist → D1, and the welcome email
+  e.js               POST /api/e: what a visitor who came through a personal link does next
+functions/r/[code].js  GET /r/<code>: a personal link from an outreach email → record, cookies, redirect
+functions/admin/outreach.js  GET /admin/outreach: who opened their link (password: STATS_PASSWORD)
+lib/
+  outreach.js        shared code for the three above: codes, recording, retention, caps
+  outreach-codes.js  hashes of the codes we issued (generated from the outreach sheet)
+public/track.*.js    sends a page view, video milestones, time on page and a sign-up, only on a personal-link visit
 scripts/
   hash-assets.mjs    names the stylesheet and script after their content; run before every release
 schema.sql           D1 tables
@@ -121,3 +128,15 @@ The page is then at http://localhost:8788, with the function and the CSP from `_
 ```sh
 npx wrangler d1 execute tape-site --local --config ../tape-local/wrangler.toml --persist-to ../tape-local/state --command "SELECT * FROM waitlist"
 ```
+
+
+## Personal links (outreach emails)
+
+Each outreach email carries one personal link, `https://tapeit.dev/r/<code>`. The code is the company's name plus four random characters; the outreach sheet maps codes to teams, and the site only knows the code. `lib/outreach-codes.js` lists the first 16 hex characters of SHA-256 of every code issued, so links nobody issued are never recorded. Regenerate it from the sheet when new codes are issued.
+
+- **Opening the link** records a `hit` (device type, or `scanner?` when it looks like a mail server checking links before delivery), sets `tape_r` (HttpOnly, the code) and `tape_t=1` for 30 days, and redirects to `DESTINATION` in `functions/r/[code].js`, the home page until the intro video has its own page.
+- **On that visit** `track.js` sends page views, video milestones (0, 25, 50, 75, 100%), seconds a page was visible and a waitlist sign-up (never the address) to `/api/e`, which stores them under the code from the HttpOnly cookie. Visitors without the cookie, and browsers that send Global Privacy Control, send and store nothing.
+- **Not stored:** IP addresses, user agents, referrers, form contents. Country is Cloudflare's two-letter code. Events older than 90 days are deleted whenever a new one is written; each code is capped at 500 events a day, and all codes together at 20,000.
+- **Results:** in the Pages project, Settings → Variables and secrets → Production → add the secret `STATS_PASSWORD`, then redeploy. `https://tapeit.dev/admin/outreach` then asks for a password (any user name): one row per code with first click, link opens and how many were mail scanners, pages seen in a browser, video watched, seconds on the site, sign-up, country and last visit. `?format=csv` downloads it. Without the secret the page doesn't exist.
+- **Raw events** in the D1 console: `SELECT * FROM outreach_events ORDER BY at DESC LIMIT 200;`
+- The privacy page describes all of this under "Personal links in our emails". Keep it in step with the code.

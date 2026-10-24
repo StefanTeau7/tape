@@ -153,6 +153,7 @@
       if (message) message.hidden = false;
     }
     if (ctaSay) ctaSay.textContent = 'yay! see you soon';
+    document.dispatchEvent(new CustomEvent('tape:joined'));
     showPick();
     const message = $('[data-joined]', form.closest('[data-join]'));
     if (message) message.focus();

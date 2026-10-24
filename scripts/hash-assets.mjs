@@ -19,6 +19,7 @@ const functionsDir = new URL('../functions/api/', import.meta.url).pathname;
 const assets = [
   ['site', 'css'],
   ['tape', 'js'],
+  ['track', 'js'],
 ];
 const pages = readdirSync(root).filter((name) => name.endsWith('.html')).concat('_headers').map((name) => join(root, name))
   .concat(readdirSync(functionsDir).filter((name) => name.endsWith('.js')).map((name) => join(functionsDir, name)));

@@ -14,7 +14,10 @@
 /site.6c79836d097d.css
   Cache-Control: public, max-age=31536000, immutable
 
-/tape.8b3befcc64ed.js
+/tape.a0b9928caee9.js
+  Cache-Control: public, max-age=31536000, immutable
+
+/track.6e4b119530f5.js
   Cache-Control: public, max-age=31536000, immutable
 
 /fonts/*

@@ -1,4 +1,6 @@
 User-agent: *
 Allow: /
 Disallow: /api/
+Disallow: /r/
+Disallow: /admin/
 Sitemap: https://tapeit.dev/sitemap.xml

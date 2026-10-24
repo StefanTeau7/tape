@@ -28,3 +28,23 @@ CREATE TABLE IF NOT EXISTS waitlist_salt (
   day TEXT PRIMARY KEY,
   salt TEXT NOT NULL
 );
+
+-- Personal links in outreach emails (lib/outreach.js): one row per event on a visit that
+-- came through https://tapeit.dev/r/<code>. kind: hit (the link was fetched; detail is
+-- desktop, mobile or scanner?), view (a page was shown in a browser; path), video (detail:
+-- 0, 25, 50, 75 or 100 percent), time (detail: seconds the page was visible) or signup
+-- (joined the waitlist; the address is never stored here). country: Cloudflare's
+-- two-letter code. No IP address, user agent or referrer. Rows older than 90 days are
+-- deleted whenever a new one is written. The functions also create this table if it is
+-- missing.
+CREATE TABLE IF NOT EXISTS outreach_events (
+  id INTEGER PRIMARY KEY AUTOINCREMENT,
+  code TEXT NOT NULL,
+  kind TEXT NOT NULL,
+  path TEXT,
+  detail TEXT,
+  country TEXT,
+  at TEXT NOT NULL
+);
+CREATE INDEX IF NOT EXISTS outreach_events_code ON outreach_events (code, at);
+CREATE INDEX IF NOT EXISTS outreach_events_at ON outreach_events (at);
