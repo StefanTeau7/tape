@@ -1,7 +1,7 @@
 // GET /admin/outreach: who opened their personal link, and what they did next.
 // Off unless the Pages secret STATS_PASSWORD is set; then any user name with that password
 // (HTTP Basic auth). ?format=csv downloads the same table for the outreach sheet.
-import { ensureSchema, SECURITY_HEADERS } from '../../lib/outreach.js';
+import { ensureSchema, knownCode, SECURITY_HEADERS } from '../../lib/outreach.js';
 
 const HTML_HEADERS = { ...SECURITY_HEADERS, 'content-type': 'text/html; charset=utf-8', 'content-security-policy': "default-src 'none'; frame-ancestors 'none'" };
 
@@ -51,7 +51,10 @@ export async function onRequestGet({ request, env }) {
     return new Response('Password required', { status: 401, headers: { ...SECURITY_HEADERS, 'www-authenticate': 'Basic realm="Tape outreach", charset="UTF-8"' } });
   }
   await ensureSchema(env.WAITLIST_DB);
-  const { results = [] } = await env.WAITLIST_DB.prepare(SUMMARY_SQL).all();
+  const { results: all = [] } = await env.WAITLIST_DB.prepare(SUMMARY_SQL).all();
+  // only codes currently issued (a withdrawn or test code stays out of the table)
+  const results = [];
+  for (const row of all) if (await knownCode(row.code)) results.push(row);
   const url = new URL(request.url);
   if (url.searchParams.get('format') === 'csv') {
     const lines = [COLUMNS.map(([, label]) => csvCell(label)).join(',')].concat(results.map((row) => COLUMNS.map(([key]) => csvCell(row[key])).join(',')));
